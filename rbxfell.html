@@ -1,0 +1,192 @@
+<html>
+<head>
+    <title>rbxfell</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            background-color: #0e0a37;
+            color: #fff;
+        }
+
+        #logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 300px;
+            height: auto;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            margin-top: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #roblox-button {
+            position: absolute;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.1s ease;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .rating-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .star {
+            font-size: 24px;
+            color: gold;
+            cursor: pointer; /* Делаем звёздочки кликабельными */
+        }
+
+        #share-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #00aaff; /* Другой оттенок синего */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .comment {
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="logo" src="https://chatgptchatapp.com/storage/generate-images/17-02-2025/63efb58f3a5cf4d3382bf8f7d8075f6e/4f76d202129a3bc3627a2906e8f8358e.jpg" alt="rbxfell Logo">
+
+    <h1>rbxfell</h1>
+
+    <div class="button-container">
+        <button onclick="showMessage(10)">10 Робуксов</button>
+        <button onclick="showMessage(100)">100 Робуксов</button>
+        <button onclick="showMessage(1000)">1000 Робуксов</button>
+        <button onclick="showMessage(10000)">10000 Робуксов</button>
+    </div>
+
+    <button id="roblox-button" style="display: none;">Получить Робуксы!</button>
+
+    <div id="message"></div>
+
+    <!-- Рейтинг -->
+    <div class="rating-container">
+        <h2>Оцените наш сайт</h2>
+        <div id="rating">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+        </div>
+        <p id="rating-message"></p>
+
+        <h3>Отзывы:</h3>
+        <div id="comments">
+            <div class="comment"><strong>dedpupsik:</strong>Этот сайт просто бомба! Я получил 10000 робуксов!</div>
+            <div class="comment"><strong>Mihatos5:</strong> Лучший сайт, который я когда-либо видел!</div>
+            <div class="comment"><strong>Racketn1:</strong> Не работает 7 раз! Но все равно хорший сайт для получения робуксов!</div>
+        </div>
+    </div>
+
+    <button id="share-button">Поделиться с друзьями</button>
+
+    <script>
+        const robloxButton = document.getElementById('roblox-button');
+        const messageDiv = document.getElementById('message');
+
+        function showMessage(amount) {
+            messageDiv.textContent = `Вы выбрали ${amount} робуксов.`;
+            robloxButton.style.display = 'block';
+            robloxButton.addEventListener('mousemove', moveButton);
+            robloxButton.addEventListener('click', robloxClick);
+        }
+
+        function moveButton(event) {
+            const buttonWidth = robloxButton.offsetWidth;
+            const buttonHeight = robloxButton.offsetHeight;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            let newX = Math.random() * (windowWidth - buttonWidth);
+            let newY = Math.random() * (windowHeight - buttonHeight);
+
+             newX = Math.max(0, Math.min(newX, windowWidth - buttonWidth));
+             newY = Math.max(0, Math.min(newY, windowHeight - buttonHeight));
+
+
+            robloxButton.style.left = newX + 'px';
+            robloxButton.style.top = newY + 'px';
+        }
+
+        function robloxClick() {
+          messageDiv.textContent = "Ха! Не так быстро!";
+          robloxButton.style.display = 'none';
+          robloxButton.removeEventListener('mousemove', moveButton);
+        }
+
+        // Рейтинг
+        const stars = document.querySelectorAll('.star');
+        const ratingMessage = document.getElementById('rating-message');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.dataset.rating;
+                ratingMessage.textContent = `Вы оценили этот сайт на ${rating} звезд! Спасибо!`;
+            });
+        });
+
+        const shareButton = document.getElementById('share-button');
+
+        shareButton.addEventListener('click', function() {
+            const currentUrl = window.location.href;
+            navigator.clipboard.writeText(currentUrl)
+                .then(() => {
+                    messageDiv.textContent = "Ссылка скопирована в буфер обмена! Поделитесь с друзьями этим сайтом!";
+                })
+                .catch(err => {
+                    messageDiv.textContent = "Не удалось скопировать ссылку :(";
+                    console.error('Не удалось скопировать ссылку: ', err);
+                });
+        });
+    </script>
+
+</body>
+</html>
